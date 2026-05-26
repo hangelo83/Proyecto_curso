@@ -42,8 +42,8 @@ MAPEO_NODOS_AREAS = {
     # Ventas
     "Ventas": "Ventas",
     "Perfilamiento": "Ventas",
-    "Oferta Básica": "Ventas",
-    "Oferta Premium": "Ventas",
+    "Plan Básico": "Ventas",
+    "Plan Premium": "Ventas",
     "Venta no concretada": "Ventas",
     "Cliente nuevo (mejor caso de exito)": "Ventas",
     "Venta de equipo o accesorio (exito medio)": "Ventas",
@@ -83,8 +83,8 @@ COORDENADAS_MANUALES = {
     "Derivar a Terreno": (60, -48),
 
     # Capa 3 - Sub-columna Comercial / Ventas / Postventa (x: 82-93)
-    "Oferta Básica": (82, 50),
-    "Oferta Premium": (90, 28),
+    "Plan Básico": (82, 50),
+    "Plan Premium": (90, 28),
     "Cliente nuevo (mejor caso de exito)": (92, 5),
     "Venta de equipo o accesorio (exito medio)": (82, -20),
     "Nuevo plan": (88, -48),
@@ -206,19 +206,11 @@ def crear_figura(caminos_verde=None, caminos_rojo=None, caminos_amarillo=None, c
         es_ruta = color_arista is not None
         
         if es_ruta:
-            if es_cruzada:
-                color_final = "#fb8500"  # Naranja Vibrante Premium
-                ancho_arista = 8.5       # Más grueso para destacar visualmente
-            else:
-                color_final = color_arista
-                ancho_arista = 7.5
+            color_final = color_arista  # verde > rojo > amarillo según prioridad asignada
+            ancho_arista = 8.5 if es_cruzada else 7.5
         else:
-            if es_cruzada:
-                color_final = "#cfd8dc"  # Gris azulado sutil para denotar el enganche latente
-                ancho_arista = 2.0
-            else:
-                color_final = "#e9ecef"
-                ancho_arista = 1.5
+            color_final = "#cfd8dc" if es_cruzada else "#e9ecef"
+            ancho_arista = 2.0 if es_cruzada else 1.5
         
         prefijo_hover = "⚡ <b>[ENGANCHE INTER-ÁREA]</b><br>" if es_cruzada else ""
         hover_txt = f"{prefijo_hover}<b>{origen} ➔ {destino}</b><br>Acción: {etiqueta}<br>Costo: {costo}"
