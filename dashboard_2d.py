@@ -59,45 +59,44 @@ MAPEO_NODOS_AREAS = {
 # Coordenadas perfectas diseñadas con una desalineación horizontal estratégica para evitar solapamientos físicos
 COORDENADAS_MANUALES = {
     "Llamada Entrante": (0, 0),
-    
-    # Capa 1 (x = 22) - Muy espaciados
-    "Facturación": (22, 25),
-    "Técnicos": (22, 8),
-    "Ventas": (22, -8),
-    "Postventa": (22, -25),
-    
-    # Capa 2 (x = 46 con desalineación estratégica para romper verticalidades en el flujo de Soporte)
-    "Verificar Contrato": (46, 30),
-    "Revisar Historial": (46, 15),
-    "Soporte Nivel 1": (48, 0),             # Desplazado a la derecha
-    "Verificar Estado Pago": (38, -15),      # Desplazado a la izquierda para que la conexión a Soporte Nivel 1 sea diagonal
-    "Perfilamiento": (46, -30),
-    "Negociar Descuento": (46, -45),
-    
-    # Capa 3 (Desalineación horizontal avanzada en X para erradicar solapamientos y líneas verticales puras)
-    # Sub-columna Soporte / Facturación
-    "Tramitar Devolución": (69, 35),
-    "Explicar Cobro": (69, 20),
-    "Corte de servicio por no pago": (56, -20), # Posición de pre-error de morosidad diagonal
-    "Reinicio Remoto": (65, 5),              # Desplazado a la izquierda
-    "Soporte Nivel 2": (73, -10),            # Desplazado a la derecha
-    "Derivar a Terreno": (65, -25),          # Desplazado a la izquierda para crear diagonales desde Soporte Nivel 2
-    
-    # Sub-columna Comercial / Ventas / Postventa
-    "Oferta Básica": (75, 30),               # Desplazado a la izquierda
-    "Oferta Premium": (83, 15),              # Desplazado a la derecha
-    "Cliente nuevo (mejor caso de exito)": (85, 0), # Desplazado a la derecha (destino de Oferta Premium)
-    "Venta de equipo o accesorio (exito medio)": (73, -15), # Desplazado a la izquierda (destino de Oferta Básica)
-    "Nuevo plan": (80, -30),
-    "Recambio de equipo": (80, -45),
-    "Venta no concretada": (78, -60),        # Centro-izquierda, recibe de ambas Ofertas creando hermosas diagonales
-    "Procesar Baja": (80, -75),
-    
-    # Capa 4 (x = 100) - Cierres finales absolutos alineados y muy holgados
-    "Éxito Comercial (Venta)": (100, 30),
-    "Éxito (Contención)": (100, 10),
-    "Fracaso (Fuga)": (100, -10),
-    "Escalamiento SERNAC": (100, -40)
+
+    # Capa 1 (x = 22)
+    "Facturación": (22, 38),
+    "Técnicos": (22, 12),
+    "Ventas": (22, -12),
+    "Postventa": (22, -38),
+
+    # Capa 2
+    "Verificar Contrato": (46, 45),
+    "Revisar Historial": (46, 23),
+    "Soporte Nivel 1": (48, 0),
+    "Verificar Estado Pago": (38, -23),
+    "Perfilamiento": (46, -45),
+    "Negociar Descuento": (46, -68),
+
+    # Capa 3 - Sub-columna Soporte / Facturación (x: 60-72)
+    "Tramitar Devolución": (63, 55),
+    "Explicar Cobro": (63, 33),
+    "Reinicio Remoto": (60, 8),
+    "Corte de servicio por no pago": (54, -32),
+    "Soporte Nivel 2": (70, -18),
+    "Derivar a Terreno": (60, -48),
+
+    # Capa 3 - Sub-columna Comercial / Ventas / Postventa (x: 82-93)
+    "Oferta Básica": (82, 50),
+    "Oferta Premium": (90, 28),
+    "Cliente nuevo (mejor caso de exito)": (92, 5),
+    "Venta de equipo o accesorio (exito medio)": (82, -20),
+    "Nuevo plan": (88, -48),
+    "Recambio de equipo": (88, -70),
+    "Venta no concretada": (86, -95),
+    "Procesar Baja": (88, -118),
+
+    # Capa 4 - Cierres finales
+    "Éxito Comercial (Venta)": (105, 48),
+    "Éxito (Contención)": (105, 18),
+    "Fracaso (Fuga)": (105, -12),
+    "Escalamiento SERNAC": (105, -62)
 }
 
 def layout_arbol_2d(G):
@@ -366,7 +365,7 @@ app.layout = html.Div([
         dcc.Graph(
             id='grafico-2d',
             figure=crear_figura(),
-            style={'height': '72vh', 'width': '100%'}
+            style={'height': '83vh', 'width': '100%'}
         )
     ], style={
         'backgroundColor': '#ffffff', 
