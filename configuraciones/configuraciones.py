@@ -26,8 +26,8 @@ NODOS_CAPAS = {
     "Reinicio Remoto": 3,
     "Soporte Nivel 2": 3,
     "Derivar a Terreno": 3,
-    "Oferta Básica": 3,
-    "Oferta Premium": 3,
+    "Plan Básico": 3,
+    "Plan Premium": 3,
     "Venta no concretada": 3, # Se une a Fracaso (Fuga)
     "Procesar Baja": 3,
     "Cliente nuevo (mejor caso de exito)": 3, # Venta Exitosa (Capa 3)
@@ -84,16 +84,16 @@ ARISTAS = [
     
     # --- Rama Ventas ---
     ("Ventas", "Perfilamiento", 2, "Análisis de uso"),
-    ("Perfilamiento", "Oferta Básica", 3, "Bajo Presupuesto"),
-    ("Perfilamiento", "Oferta Premium", 8, "Venta Cruzada"),
+    ("Perfilamiento", "Plan Básico", 5, "Bajo Presupuesto"),
+    ("Perfilamiento", "Plan Premium", 2, "Venta Cruzada"),
     
-    ("Oferta Básica", "Venta de equipo o accesorio (exito medio)", 2, "Cierra equipo/acc"),
-    ("Oferta Básica", "Cliente nuevo (mejor caso de exito)", 3, "Cierra plan básico"),
-    ("Oferta Básica", "Venta no concretada", 4, "Rechaza oferta básica"),
+    ("Plan Básico", "Venta de equipo o accesorio (exito medio)", 2, "Cierra equipo/acc"),
+    ("Plan Básico", "Cliente nuevo (mejor caso de exito)", 3, "Cierra plan básico"),
+    ("Plan Básico", "Venta no concretada", 4, "Rechaza oferta básica"),
     
-    ("Oferta Premium", "Cliente nuevo (mejor caso de exito)", 1, "Cierra plan premium"),
-    ("Oferta Premium", "Venta no concretada", 6, "Rechaza premium"),
-    ("Oferta Premium", "Postventa", 1, "Considera caro"), # Salto transeúnte
+    ("Plan Premium", "Cliente nuevo (mejor caso de exito)", 1, "Cierra plan premium"),
+    ("Plan Premium", "Venta no concretada", 10, "Rechaza premium"),
+    ("Plan Premium", "Postventa", 1, "Considera caro"), # Salto transeúnte
     
     ("Venta no concretada", "Fracaso (Fuga)", 0, "Une a fuga global"),
     
@@ -103,6 +103,7 @@ ARISTAS = [
     
     # --- Rama Postventa ---
     ("Postventa", "Negociar Descuento", 15, "Descuento 50% (Pérdida)"),
+    ("Postventa", "Perfilamiento", 4, "Venta sin descuento"),
     ("Postventa", "Soporte Nivel 1", 3, "Asistencia técnica postventa"),
     ("Postventa", "Verificar Estado Pago", 2, "Revisar suspensión"),
     ("Negociar Descuento", "Nuevo plan", 2, "Acepta migración de plan"),
@@ -136,7 +137,7 @@ DESCRIPCIONES_NODOS = {
     "Facturación": "El cliente pregunta por cobros indebidos",
     "Técnicos": "El cliente pregunta por falla en su servicio",
     "Ventas": "El cliente desea contratar nuevos servicios o adquirir equipos",
-    "Postventa": "El cliente solicita asistencia comercial posterior a la compra o desea cancelar",
+    "Postventa": "El cliente solicita asistencia comercial posterior a la compra o desea cancelar. Puede derivarse a venta directa sin descuento (Perfilamiento) o a retención con descuento (Negociar Descuento)",
     
     # Capa 2
     "Verificar Contrato": "Se revisan las cláusulas de permanencia y SLAs del cliente",
@@ -153,8 +154,8 @@ DESCRIPCIONES_NODOS = {
     "Reinicio Remoto": "Ejecución de reset virtual de la ONT o módem del abonado",
     "Soporte Nivel 2": "Escalamiento a ingenieros expertos en redes para diagnóstico profundo",
     "Derivar a Terreno": "Agendamiento de visita física de un técnico calificado a domicilio",
-    "Oferta Básica": "Presentación de planes esenciales de menor valor mensual",
-    "Oferta Premium": "Presentación de planes de alta velocidad o servicios ilimitados",
+    "Plan Básico": "Presentación de planes esenciales de menor valor mensual",
+    "Plan Premium": "Presentación de planes de alta velocidad o servicios ilimitados",
     "Cliente nuevo (mejor caso de exito)": "Alta exitosa de nuevo abonado en la plataforma comercial",
     "Venta de equipo o accesorio (exito medio)": "Venta exitosa de terminal físico o kit de accesorios",
     "Nuevo plan": "Migración exitosa a una tarifa más adecuada, reteniendo al abonado",
