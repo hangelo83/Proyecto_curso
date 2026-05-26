@@ -173,7 +173,8 @@ def crear_figura(caminos_verde=None, caminos_rojo=None, caminos_amarillo=None, c
                 color_aristas[(c[i], c[i+1])] = HEX_VERDE
 
     edge_traces = []
-    mid_x, mid_y, mid_text = [], [], []
+    mid_x_act, mid_y_act, mid_text_act = [], [], []
+    mid_x_ina, mid_y_ina, mid_text_ina = [], [], []
 
     # 1. Trazado de Aristas
     for edge in G.edges(data=True):
@@ -181,15 +182,21 @@ def crear_figura(caminos_verde=None, caminos_rojo=None, caminos_amarillo=None, c
         destino = edge[1]
         costo = edge[2]['weight']
         etiqueta = edge[2]['label']
-        
+
         x0, y0 = pos_2d[origen]
         x1, y1 = pos_2d[destino]
-        
+
         mx, my = (x0+x1)/2, (y0+y1)/2
-        mid_x.append(mx)
+        es_activa = (origen, destino) in color_aristas
         # Desplazamiento leve de los textos del peso para evitar que solapen
-        mid_y.append(my + 1.2)
-        mid_text.append(f"<b>{costo}</b>")
+        if es_activa:
+            mid_x_act.append(mx)
+            mid_y_act.append(my + 1.2)
+            mid_text_act.append(f"<b>{costo}</b>")
+        else:
+            mid_x_ina.append(mx)
+            mid_y_ina.append(my + 1.2)
+            mid_text_ina.append(f"{costo}")
         
         # Detección de arista cruzada inter-área
         es_cruzada = (MAPEO_NODOS_AREAS.get(origen) != MAPEO_NODOS_AREAS.get(destino) and 
@@ -227,13 +234,22 @@ def crear_figura(caminos_verde=None, caminos_rojo=None, caminos_amarillo=None, c
         )
         edge_traces.append(trace)
 
-    # 2. Pesos/Costos en medio de aristas
-    trace_weights = go.Scatter(
-        x=mid_x, y=mid_y,
+    # 2. Pesos/Costos en medio de aristas — activos visibles, inactivos casi invisibles
+    trace_weights_act = go.Scatter(
+        x=mid_x_act, y=mid_y_act,
         mode='text',
-        text=mid_text,
+        text=mid_text_act,
         textposition='middle center',
         textfont=dict(color='black', size=13, family='Arial Black'),
+        hoverinfo='none',
+        showlegend=False
+    )
+    trace_weights_ina = go.Scatter(
+        x=mid_x_ina, y=mid_y_ina,
+        mode='text',
+        text=mid_text_ina,
+        textposition='middle center',
+        textfont=dict(color='rgba(180,180,180,0.35)', size=11, family='Arial'),
         hoverinfo='none',
         showlegend=False
     )
@@ -296,7 +312,7 @@ def crear_figura(caminos_verde=None, caminos_rojo=None, caminos_amarillo=None, c
         showlegend=False
     )
 
-    fig = go.Figure(data=edge_traces + [trace_weights, trace_nodes])
+    fig = go.Figure(data=edge_traces + [trace_weights_ina, trace_weights_act, trace_nodes])
     fig.update_layout(
         xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
         yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
